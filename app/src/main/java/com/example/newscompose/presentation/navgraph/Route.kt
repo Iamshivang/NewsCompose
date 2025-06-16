@@ -1,6 +1,5 @@
 package com.example.newscompose.presentation.navgraph
 
-import com.example.newscompose.domain.model.Article
 import kotlinx.serialization.Serializable
 
 /*
@@ -8,35 +7,28 @@ import kotlinx.serialization.Serializable
  * Created: 6/8/25
  * Description: [Add description here]
  */
-enum class Route(
-    val route: String
-) {
 
-    ONBOARDINGSCREEN(route = "OnBoardingScreen"),
-    HOMESCREEN(route = "homeScreen"),
-    SEARCHSCREEN(route = "searchScreen"),
-    BOOKMARKSCREEN(route = "bookmarksScreen"),
-    DETAILSCREEN(route = "detailScreen"),
-    APPSTARTNAVIGATION(route = "appStartNavigation"),
-    NEWSNAVIGATION(route = "newsNavigation"),
-    NEWSNAVIGATORSCREEN(route = "newsNavigatorScreen")
-}
-
-sealed class Routes{
+sealed class Route{
 
     @Serializable
-    data object HomeScreen: Routes()
+    data object LoginScreen: Route()
 
     @Serializable
-    data object OnBoardingScreen: Routes()
+    data object SignupScreen: Route()
 
     @Serializable
-    data object SearchScreen: Routes()
+    data object HomeScreen: Route()
 
     @Serializable
-    data object CollectionScreen: Routes()
+    data object OnBoardingScreen: Route()
 
     @Serializable
-    data object DetailScreen: Routes()
+    data object SearchScreen: Route()
+
+    @Serializable
+    data object CollectionScreen: Route()
+
+    @Serializable
+    data object DetailScreen: Route()
 
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "69976798123",
+    "project_id": "newscompose-5755d",
+    "storage_bucket": "newscompose-5755d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69976798123:android:347f1fb1843283ccbc58ee",
+        "android_client_info": {
+          "package_name": "com.example.newscompose"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxqKWA5GAN3Os4HZFJbBKahqS9qnDB4No"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

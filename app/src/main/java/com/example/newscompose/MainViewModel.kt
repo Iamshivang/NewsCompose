@@ -6,12 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newscompose.domain.usecases.AppEntryUseCases
+import com.example.newscompose.domain.usecases.auth.IsLoggedInUseCase
 import com.example.newscompose.presentation.navgraph.Route
-import com.example.newscompose.presentation.navgraph.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /*
@@ -22,29 +22,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val appEntryUseCases: AppEntryUseCases
+    private val appEntryUseCases: AppEntryUseCases,
+    private val isLoggedInUseCase: IsLoggedInUseCase
 ): ViewModel() {
 
     var splashCondition by mutableStateOf(true)
         private set
 
-    var startDestination by mutableStateOf(Route.ONBOARDINGSCREEN.route)
+    var startDestination by mutableStateOf<String>("onBoardingScreen")
         private set
 
-
     init {
+        decideStartDestination()
+    }
 
-        appEntryUseCases.readAppEntry().onEach { shouldStartFromHomeScreen ->
+    private fun decideStartDestination()= viewModelScope.launch {
 
-            if(shouldStartFromHomeScreen){
-                 startDestination = Route.HOMESCREEN.route
+        appEntryUseCases.readAppEntry.invoke().collect { isOnBoardingCompleted ->
+
+            if(!isOnBoardingCompleted){
+                startDestination = "onBoardingScreen"
             }else{
-                startDestination = Route.ONBOARDINGSCREEN.route
-            }
 
+                isLoggedInUseCase.invoke().collect { isUserLoggedIn ->
+
+                    if(isUserLoggedIn){
+                        startDestination = "homeScreen"
+                    }else{
+                        startDestination = "loginScreen"
+                    }
+                }
+            }
             delay(300)
             splashCondition = false
-
-        }.launchIn(viewModelScope)
+        }
     }
 }

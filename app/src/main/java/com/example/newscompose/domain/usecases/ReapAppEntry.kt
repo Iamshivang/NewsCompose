@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
  * Description: [Add description here]
  */
 class ReapAppEntry @Inject constructor(
-    val localUserManager: LocalUserManager
+    private val localUserManager: LocalUserManager
 ) {
 
     operator fun invoke(): Flow<Boolean> {

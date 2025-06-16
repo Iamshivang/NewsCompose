@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
     alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
@@ -83,6 +84,8 @@ dependencies {
     // Navigation with Compose
     val nav_version = "2.9.0"
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
+
 
     // retrofit
     implementation(libs.retrofit)
@@ -104,12 +107,16 @@ dependencies {
     // Loading images using coil in Jetpack Compose
     implementation(libs.coil.compose)
 
-    // type safe using serrizatoin
-    implementation(libs.kotlinx.serialization.json)
-
     // room
     val room_version = "2.7.1"
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation(libs.firebase.auth)
+
 }

@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -27,7 +25,6 @@ import com.example.newscompose.presentation.common.ErrorView
 import com.example.newscompose.presentation.common.LoadingView
 import com.example.newscompose.presentation.common.SearchBar
 import com.example.newscompose.presentation.common.SuccessView
-import com.example.newscompose.presentation.navgraph.Routes
 import com.example.newscompose.utils.Resource
 
 /*

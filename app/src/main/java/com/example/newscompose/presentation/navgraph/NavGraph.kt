@@ -6,11 +6,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.newscompose.presentation.auth.login.LoginScreen
+import com.example.newscompose.presentation.auth.signup.SignupScreen
 import com.example.newscompose.presentation.collections.CollectionScreen
 import com.example.newscompose.presentation.detail.DetailScreen
 import com.example.newscompose.presentation.home.HomeScreen
 import com.example.newscompose.presentation.home.HomeViewModel
-import com.example.newscompose.presentation.navgraph.Routes.HomeScreen
 import com.example.newscompose.presentation.onboarding.OnBoardingScreen
 import com.example.newscompose.presentation.onboarding.OnBoardingViewModel
 import com.example.newscompose.presentation.search.SearchScreen
@@ -31,12 +32,19 @@ fun NavGraph(
     val viewModel: HomeViewModel = hiltViewModel()
     val articlesState = viewModel.articles
 
+    val startScreen: Route = when(startDestination){
+
+        "onBoardingScreen" -> Route.OnBoardingScreen
+        "loginScreen" -> Route.LoginScreen
+        else -> Route.HomeScreen
+    }
+
     NavHost(
         navController= navController,
-        startDestination= if(startDestination == Route.ONBOARDINGSCREEN.route) Routes.OnBoardingScreen else Routes.HomeScreen
+        startDestination= startScreen
     ){
 
-        composable<Routes.OnBoardingScreen>{
+        composable<Route.OnBoardingScreen>{
 
             val viewModel: OnBoardingViewModel = hiltViewModel()
             OnBoardingScreen{
@@ -44,7 +52,19 @@ fun NavGraph(
             }
         }
 
-        composable<Routes.HomeScreen>{
+        composable<Route.LoginScreen> {
+
+            LoginScreen(navController)
+        }
+
+        composable<Route.SignupScreen>{
+
+            SignupScreen(
+                navController
+            )
+        }
+
+        composable<Route.HomeScreen>{
 
             HomeScreen(
                 articlesState,
@@ -52,38 +72,38 @@ fun NavGraph(
                     Log.d("NavGraph", it.toString())
                     viewModel.selectArticle(it)
                     viewModel.notFromCollectionScreen()
-                    navController.navigate(Routes.DetailScreen)
+                    navController.navigate(Route.DetailScreen)
                 },
-                toNavigateSearchScreen = {navController.navigate(Routes.SearchScreen)},
+                toNavigateSearchScreen = {navController.navigate(Route.SearchScreen)},
                 {
-                    navController.navigate(Routes.CollectionScreen)
+                    navController.navigate(Route.CollectionScreen)
                 }
             )
         }
 
-        composable<Routes.DetailScreen>{
+        composable<Route.DetailScreen>{
 
             DetailScreen(viewModel.selectedArticle,
                 {navController.popBackStack()},
                 viewModel.isFromCollectionScreen)
         }
 
-        composable<Routes.SearchScreen>{
+        composable<Route.SearchScreen>{
             SearchScreen{
                 Log.d("NavGraph", it.toString())
                 viewModel.selectArticle(it)
                 viewModel.notFromCollectionScreen()
-                navController.navigate(Routes.DetailScreen)
+                navController.navigate(Route.DetailScreen)
             }
         }
 
-        composable<Routes.CollectionScreen>{
+        composable<Route.CollectionScreen>{
             CollectionScreen(
                 onClick = {
                 Log.d("NavGraph", it.toString())
                 viewModel.selectArticle(it)
                     viewModel.fromCollectionScreen()
-                navController.navigate(Routes.DetailScreen)
+                navController.navigate(Route.DetailScreen)
             },
                 {
                     navController.popBackStack()
