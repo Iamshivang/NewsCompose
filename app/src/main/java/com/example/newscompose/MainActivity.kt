@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.example.newscompose.presentation.navgraph.NavGraph
+import androidx.navigation.compose.rememberNavController
+import com.example.newscompose.presentation.navgraph.MainNavGraph
+import com.example.newscompose.presentation.navgraph.RootNavGraph
 import com.example.newscompose.presentation.theme.NewsComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,11 +41,13 @@ class MainActivity : ComponentActivity() {
                         )
                 ){
 
-                    val startDestination = viewModel.startDestination
-                    NavGraph(
-                        startDestination = startDestination
-                    )
+                    var startScreen = viewModel.startDestination
+                    val navController = rememberNavController()
 
+                    RootNavGraph(
+                        navController,
+                        startScreen
+                    )
                 }
             }
         }

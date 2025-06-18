@@ -119,4 +119,8 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation(libs.firebase.auth)
 
+    
+    // material 3 for the navigation Drawer
+    implementation(libs.material3)
+
 }

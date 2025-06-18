@@ -73,6 +73,7 @@ fun CollectionScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.ic_back_arrow),
                             contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary
                         )
                     }
                 }

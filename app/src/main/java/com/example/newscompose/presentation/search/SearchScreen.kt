@@ -2,17 +2,30 @@ package com.example.newscompose.presentation.search
 
 import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.newscompose.R
 import com.example.newscompose.domain.model.Article
 import com.example.newscompose.presentation.common.ErrorView
 import com.example.newscompose.presentation.common.LoadingView
@@ -32,8 +45,9 @@ import kotlinx.coroutines.launch
  */
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(onClick: (Article) -> Unit) {
+fun SearchScreen(onClick: (Article) -> Unit, onBackClick: () -> Unit) {
 
     val TAG = "SearchScrenn"
     val viewModel: SearchViewModel = hiltViewModel()
@@ -43,20 +57,39 @@ fun SearchScreen(onClick: (Article) -> Unit) {
 
     Scaffold(
         topBar = {
-            SearchBar(
-                text = query.value,
-                readOnly = false,
-                onValueChange = {
-                    query.value = it
-                    jober?.cancel()
-                    jober = CoroutineScope(Dispatchers.Main).launch{
-                        delay(500)
-                        viewModel.search(it)
-                    }
+            TopAppBar(
+                title = {
+                    SearchBar(
+                        text = query.value,
+                        readOnly = false,
+                        onValueChange = {
+                            query.value = it
+                            jober?.cancel()
+                            jober = CoroutineScope(Dispatchers.Main).launch{
+                                delay(500)
+                                viewModel.search(it)
+                            }
+                        },
+                        onSearch = {},
+                        modifier = Modifier
+                    )
                 },
-                onSearch = {},
                 modifier = Modifier
-                    .padding(start = 10.dp, end = 10.dp, top = 10.dp, bottom = 10.dp)
+                    .fillMaxWidth(),
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = Color.Transparent,
+                    actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                ),
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_back_arrow),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.secondary
+                        )
+                    }
+                }
             )
         },
         modifier = Modifier

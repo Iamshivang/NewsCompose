@@ -10,6 +10,15 @@ import kotlinx.serialization.Serializable
 
 sealed class Route{
 
+    // Graph
+    @Serializable
+    data object AuthNav: Route()
+
+    @Serializable
+    data object MainNav: Route()
+
+    // Screens
+
     @Serializable
     data object LoginScreen: Route()
 

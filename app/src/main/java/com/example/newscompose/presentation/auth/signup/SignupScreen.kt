@@ -1,6 +1,5 @@
 package com.example.newscompose.presentation.auth.signup
 
-import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
@@ -29,9 +27,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -42,13 +40,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.newscompose.presentation.common.ErrorView
 import com.example.newscompose.presentation.common.LoadingView
 import com.example.newscompose.presentation.navgraph.Route
 import com.example.newscompose.utils.Resource
@@ -65,7 +59,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignupScreen(
-    navController: NavController
+    navController: NavHostController
 ) {
 
     val viewModel: SignupViewModel = hiltViewModel()
@@ -99,7 +93,7 @@ fun SignupScreen(
             signupState = viewModel.signup,
             onNavigateToLogin = { navController.popBackStack() },
             onSignup = { name, email, password -> viewModel.signup(name, email, password) },
-            registerSuccess = { navController.navigate(Route.HomeScreen) },
+            registerSuccess = { navController.navigate(Route.HomeScreen)},
             registerError = { scope.launch { hostState.showSnackbar(it) } }
         )
     }
@@ -111,7 +105,7 @@ fun Content(
     signupState:  Resource<AuthResult>,
     onSignup: (String, String, String) -> Unit,
     onNavigateToLogin: () -> Unit,
-    registerSuccess: () -> Unit,
+    registerSuccess: @Composable () -> Unit,
     registerError: (String) -> Unit
 ) {
     Column(
@@ -163,7 +157,7 @@ fun Content(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(20.dp),
+                .padding(start = 20.dp, end = 20.dp, top = 5.dp),
             isError = txtFieldPasswordError.value,
             value = txtFieldPassword.value,
             leadingIcon = { Icon(Icons.Filled.Lock, "password") },
@@ -227,7 +221,7 @@ fun Content(
 @Composable
 fun SignupState(
     signupState: Resource<AuthResult>,
-    onSuccess: () -> Unit,
+    onSuccess: @Composable () -> Unit,
     onError: (String) -> Unit
 ) {
 
@@ -248,16 +242,16 @@ fun SignupState(
     }
 }
 
-@Composable
-@Preview(showBackground = true)
-fun PreviewSignupScreen(){
-
-    SignupScreen(rememberNavController())
-}
-
-@Composable
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun PreviewSignupScreenDark(){
-
-    SignupScreen(rememberNavController())
-}
+//@Composable
+//@Preview(showBackground = true)
+//fun PreviewSignupScreen(){
+//
+//    SignupScreen(rememberNavController())
+//}
+//
+//@Composable
+//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+//fun PreviewSignupScreenDark(){
+//
+//    SignupScreen(rememberNavController())
+//}
