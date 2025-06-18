@@ -11,7 +11,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.newscompose.presentation.collections.CollectionScreen
 import com.example.newscompose.presentation.detail.DetailScreen
@@ -29,14 +32,20 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun NavGraphBuilder.mainNavGraph(
-    navController: NavHostController){
+fun MainNavGraph(
+    startScreen: String){
 
+    val navController = rememberNavController()
     val viewModel: HomeViewModel = hiltViewModel()
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val articlesState = viewModel.articles
 
+    val startRoute: Route = when(startScreen){
+        "loginScreen" -> Route.LoginScreen
+        "homeScreen" -> Route.HomeScreen
+        else -> Route.OnBoardingScreen
+    }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -58,8 +67,10 @@ fun NavGraphBuilder.mainNavGraph(
             }
         }
     ) {
-        navigation<Route.MainNav>(
-            startDestination = Route.HomeScreen
+
+        NavHost(
+            navController = navController,
+            startDestination = startRoute
         ){
 
             composable<Route.HomeScreen>{
@@ -97,6 +108,7 @@ fun NavGraphBuilder.mainNavGraph(
             }
 
             composable<Route.CollectionScreen>{
+
                 CollectionScreen(
                     onClick = {
                         Log.d("NavGraph", it.toString())
@@ -109,6 +121,8 @@ fun NavGraphBuilder.mainNavGraph(
                     }
                 )
             }
+
+            authNavGraph(navController)
         }
     }
 }
