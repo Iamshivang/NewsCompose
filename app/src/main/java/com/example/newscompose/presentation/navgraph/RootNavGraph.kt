@@ -1,10 +1,15 @@
 package com.example.newscompose.presentation.navgraph
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.newscompose.presentation.home.HomeScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.newscompose.presentation.auth.login.LoginScreen
+import com.example.newscompose.presentation.auth.signup.SignupScreen
+import com.example.newscompose.presentation.onboarding.OnBoardingScreen
+import com.example.newscompose.presentation.onboarding.OnBoardingViewModel
 
 /*
  * Author: Shivang Yadav
@@ -14,15 +19,43 @@ import com.example.newscompose.presentation.home.HomeScreen
 
 @Composable
 fun RootNavGraph(
-    navHostController: NavHostController,
     startScreen: String){
+
+    val navHostController = rememberNavController()
+    val startRoute: Route = when(startScreen){
+        "loginScreen" -> Route.LoginScreen
+        "homeScreen" -> Route.HomeScreen
+        else -> Route.OnBoardingScreen
+    }
 
     NavHost(
         navController = navHostController,
-        startDestination = Route.AuthNav
+        startDestination = startRoute
     ){
 
-        authNavGraph(navHostController, startScreen)
+        composable<Route.OnBoardingScreen>{
+
+            val viewModel: OnBoardingViewModel = hiltViewModel()
+            OnBoardingScreen{
+                viewModel.saveAppEntry()
+            }
+        }
+
+        composable<Route.LoginScreen> {
+
+            LoginScreen(
+                navHostController
+            )
+        }
+
+        composable<Route.SignupScreen>{
+
+            SignupScreen(
+                navHostController
+            )
+        }
+
+        mainNavGraph(navHostController)
 
     }
 }

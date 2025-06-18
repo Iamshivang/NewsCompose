@@ -9,10 +9,9 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.example.newscompose.presentation.collections.CollectionScreen
 import com.example.newscompose.presentation.detail.DetailScreen
 import com.example.newscompose.presentation.home.HomeScreen
@@ -23,20 +22,20 @@ import kotlinx.coroutines.launch
 
 /*
  * Author: Shivang Yadav
- * Created: 6/17/25
+ * Created: 6/8/25
  * Description: [Add description here]
  */
 
 
 @Composable
-fun NavGraphBuilder.mainNavGraph(
-    navController: NavHostController){
+fun MainNavGraph1(
+    navController: NavHostController
+){
 
     val viewModel: HomeViewModel = hiltViewModel()
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val articlesState = viewModel.articles
-
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -58,8 +57,9 @@ fun NavGraphBuilder.mainNavGraph(
             }
         }
     ) {
-        navigation<Route.MainNav>(
-            startDestination = Route.HomeScreen
+        NavHost(
+            navController= navController,
+            startDestination= Route.HomeScreen
         ){
 
             composable<Route.HomeScreen>{
@@ -87,11 +87,11 @@ fun NavGraphBuilder.mainNavGraph(
             composable<Route.SearchScreen>{
                 SearchScreen(
                     {
-                        Log.d("NavGraph", it.toString())
-                        viewModel.selectArticle(it)
-                        viewModel.notFromCollectionScreen()
-                        navController.navigate(Route.DetailScreen)
-                    },
+                    Log.d("NavGraph", it.toString())
+                    viewModel.selectArticle(it)
+                    viewModel.notFromCollectionScreen()
+                    navController.navigate(Route.DetailScreen)
+                        },
                     {navController.popBackStack()}
                 )
             }

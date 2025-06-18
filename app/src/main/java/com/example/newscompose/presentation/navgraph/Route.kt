@@ -12,9 +12,6 @@ sealed class Route{
 
     // Graph
     @Serializable
-    data object AuthNav: Route()
-
-    @Serializable
     data object MainNav: Route()
 
     // Screens
