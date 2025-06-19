@@ -17,6 +17,7 @@ interface AuthRepository {
     suspend fun signup(name: String, email: String, password: String): Flow<Resource<AuthResult>>
     suspend fun logout()
     suspend fun userUid(): String
+    suspend fun getUserName(): String
     suspend fun isUserLoggedIn(): Boolean
     suspend fun resetPassword(email: String): Flow<Resource<Void?>>
 }

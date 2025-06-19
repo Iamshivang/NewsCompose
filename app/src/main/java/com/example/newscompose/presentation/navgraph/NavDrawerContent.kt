@@ -73,7 +73,7 @@ fun DrawerContent(
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "Shivang Yadav",
+                text = viewModel.userName,
                 style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondary),
                 fontWeight = FontWeight.SemiBold
             )

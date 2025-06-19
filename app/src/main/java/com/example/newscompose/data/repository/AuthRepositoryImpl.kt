@@ -85,6 +85,19 @@ class AuthRepositoryImpl @Inject constructor(
         return ""
     }
 
+    override suspend fun getUserName(): String {
+
+        try {
+            Log.d(TAG, "Success in userName ${auth.currentUser?.uid}")
+            return auth.currentUser?.displayName.toString()
+        }catch (e: Exception){
+            Log.e(TAG, "Error in userName $e")
+        }
+
+        return ""
+
+    }
+
     override suspend fun isUserLoggedIn(): Boolean {
 
         try {
