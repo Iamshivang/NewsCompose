@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.example.newscompose.presentation.navgraph.MainNavGraph
+import com.example.newscompose.presentation.navgraph.RootNavGraph
 import com.example.newscompose.presentation.theme.NewsComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,8 +43,8 @@ class MainActivity : ComponentActivity() {
 
                     var startScreen = viewModel.startDestination
 
-                    MainNavGraph(
-                        startScreen
+                    RootNavGraph(
+                        startScreen = startScreen
                     )
                 }
             }

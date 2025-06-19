@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 fun DrawerContent(
     menus: Array<DrawerMenu>,
     onMenuClick: (Route) -> Unit,
-    navHostController: NavHostController,
+    logout: () -> Unit,
     drawerState: DrawerState
 ) {
 
@@ -99,7 +99,7 @@ fun DrawerContent(
         Button(
             onClick = {
                 viewModel.logout()
-                navHostController.navigate(Route.LoginScreen)
+                logout()
                 scope.launch {
                     drawerState.close()
                     snackbarHostState.showSnackbar("Logged out")

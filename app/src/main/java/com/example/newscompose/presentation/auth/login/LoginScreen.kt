@@ -80,7 +80,7 @@ fun LoginScreen(
             loginState = viewModel.login,
             onNavigateToSignup = { navController.navigate(Route.SignupScreen) },
             onLogin = { email, password -> viewModel.login(email, password) },
-            loginSuccess = { navController.navigate(Route.HomeScreen) },
+            loginSuccess = { navController.navigate(Route.MainNav) },
             loginError = { scope.launch { hostState.showSnackbar(it) } }
         )
     }

@@ -9,13 +9,9 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navigation
 import com.example.newscompose.presentation.collections.CollectionScreen
 import com.example.newscompose.presentation.detail.DetailScreen
 import com.example.newscompose.presentation.home.HomeScreen
@@ -32,20 +28,15 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun MainNavGraph(
-    startScreen: String){
+fun MainNavGraph(logout: () -> Unit) {
 
-    val navController = rememberNavController()
     val viewModel: HomeViewModel = hiltViewModel()
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val navHostController = rememberNavController()
     val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val articlesState = viewModel.articles
 
-    val startRoute: Route = when(startScreen){
-        "loginScreen" -> Route.LoginScreen
-        "homeScreen" -> Route.HomeScreen
-        else -> Route.OnBoardingScreen
-    }
+
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -55,13 +46,11 @@ fun MainNavGraph(
                     menus = menus,
                     onMenuClick = { route ->
                         coroutineScope.launch {
-                            coroutineScope.launch {
-                                drawerState.close()
-                            }
-                            navController.navigate(route)
+                            drawerState.close()
+                            navHostController.navigate(route)
                         }
                     },
-                    navHostController = navController,
+                    logout = logout,
                     drawerState = drawerState
                 )
             }
@@ -69,8 +58,8 @@ fun MainNavGraph(
     ) {
 
         NavHost(
-            navController = navController,
-            startDestination = startRoute
+            navController = navHostController,
+            startDestination = Route.HomeScreen
         ){
 
             composable<Route.HomeScreen>{
@@ -81,9 +70,9 @@ fun MainNavGraph(
                         Log.d("NavGraph", it.toString())
                         viewModel.selectArticle(it)
                         viewModel.notFromCollectionScreen()
-                        navController.navigate(Route.DetailScreen)
+                        navHostController.navigate(Route.DetailScreen)
                     },
-                    navController,
+                    navHostController,
                     drawerState
                 )
             }
@@ -91,7 +80,7 @@ fun MainNavGraph(
             composable<Route.DetailScreen>{
 
                 DetailScreen(viewModel.selectedArticle,
-                    {navController.popBackStack()},
+                    {navHostController.popBackStack()},
                     viewModel.isFromCollectionScreen)
             }
 
@@ -101,9 +90,9 @@ fun MainNavGraph(
                         Log.d("NavGraph", it.toString())
                         viewModel.selectArticle(it)
                         viewModel.notFromCollectionScreen()
-                        navController.navigate(Route.DetailScreen)
+                        navHostController.navigate(Route.DetailScreen)
                     },
-                    {navController.popBackStack()}
+                    {navHostController.popBackStack()}
                 )
             }
 
@@ -114,15 +103,14 @@ fun MainNavGraph(
                         Log.d("NavGraph", it.toString())
                         viewModel.selectArticle(it)
                         viewModel.fromCollectionScreen()
-                        navController.navigate(Route.DetailScreen)
+                        navHostController.navigate(Route.DetailScreen)
                     },
                     {
-                        navController.popBackStack()
+                        navHostController.popBackStack()
                     }
                 )
             }
-
-            authNavGraph(navController)
         }
     }
 }
+

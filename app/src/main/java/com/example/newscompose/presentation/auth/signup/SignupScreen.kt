@@ -93,7 +93,7 @@ fun SignupScreen(
             signupState = viewModel.signup,
             onNavigateToLogin = { navController.popBackStack() },
             onSignup = { name, email, password -> viewModel.signup(name, email, password) },
-            registerSuccess = { navController.navigate(Route.HomeScreen)},
+            registerSuccess = { navController.navigate(Route.MainNav)},
             registerError = { scope.launch { hostState.showSnackbar(it) } }
         )
     }
