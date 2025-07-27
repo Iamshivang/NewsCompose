@@ -105,14 +105,13 @@ NewsCompose • News • Jetpack Compose • Jetpack • Compose • Kotlin • 
 ## 📊 Preview
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/yourusername/ComposeNews/main/screenshots/login.png" width="250" />
-  <img src="https://raw.githubusercontent.com/yourusername/ComposeNews/main/screenshots/signup.png" width="250" />
-  <img src="https://raw.githubusercontent.com/yourusername/ComposeNews/main/screenshots/forgot_password.png" width="250" />
-  <img src="https://raw.githubusercontent.com/yourusername/ComposeNews/main/screenshots/breaking_news.png" width="250" />
-  <img src="https://raw.githubusercontent.com/yourusername/ComposeNews/main/screenshots/search_news.png" width="250" />
-  <img src="https://raw.githubusercontent.com/yourusername/ComposeNews/main/screenshots/article_view.png" width="250" />
-  <img src="https://raw.githubusercontent.com/yourusername/ComposeNews/main/screenshots/save_article.png" width="250" />
-  <img src="https://raw.githubusercontent.com/yourusername/ComposeNews/main/screenshots/delete_article.png" width="250" />
+  <img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose1.png" width="250" />
+<img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose2.png" width="250" />
+<img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose3.png" width="250" />
+<img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose4.png" width="250" />
+<img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose6.png" width="250" />
+<img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose7.png" width="250" />
+<img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose8.png" width="250" />
 </p>
 
 ---
@@ -125,4 +124,4 @@ Developed with ❤️ by [Shivang Yadav](https://github.com/Iamshivang)
 
 ## 📅 License
 
-[MIT License](LICENSE)
+[MIT License](https://github.com/Iamshivang/NewsCompose/blob/main/LICENSE)
