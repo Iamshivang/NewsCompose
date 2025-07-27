@@ -1,5 +1,6 @@
 package com.example.newscompose.utils
 
+import com.example.newscompose.BuildConfig
 import com.example.newscompose.domain.model.Article
 import com.example.newscompose.domain.model.Source
 
@@ -12,7 +13,7 @@ object Constants {
 
     const val USER_SETTINGS = "userSettings"
     const val APP_ENTRY = "appEntry"
-    const val API_KEY = "d5f0cdd654b0418fa0ccbeb18556e9fb"
+    const val API_KEY = BuildConfig.API_KEY
     const val BASE_URL= "https://newsapi.org/"
     const val PAGE_SIZE = 50
     val dummyArticle = Article(

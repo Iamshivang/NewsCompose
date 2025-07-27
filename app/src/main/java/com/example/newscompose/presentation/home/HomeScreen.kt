@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -69,7 +70,7 @@ fun HomeScreen(
                         painter = painterResource(R.drawable.ic_logo),
                         contentDescription = "app_logo",
                         modifier = Modifier
-                            .height(45.dp)
+                            .size(65.dp)
                             .padding(bottom = 8.dp),
                         alignment = Alignment.TopStart,
                         contentScale = ContentScale.Fit

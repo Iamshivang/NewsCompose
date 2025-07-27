@@ -1,5 +1,6 @@
 package com.example.newscompose.presentation.auth.signup
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,9 +41,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.newscompose.presentation.common.LoadingView
 import com.example.newscompose.presentation.navgraph.Route
 import com.example.newscompose.utils.Resource
@@ -242,16 +245,16 @@ fun SignupState(
     }
 }
 
-//@Composable
-//@Preview(showBackground = true)
-//fun PreviewSignupScreen(){
-//
-//    SignupScreen(rememberNavController())
-//}
-//
-//@Composable
-//@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-//fun PreviewSignupScreenDark(){
-//
-//    SignupScreen(rememberNavController())
-//}
+@Composable
+@Preview(showBackground = true)
+fun PreviewSignupScreen(){
+
+    SignupScreen(rememberNavController())
+}
+
+@Composable
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun PreviewSignupScreenDark(){
+
+    SignupScreen(rememberNavController())
+}

@@ -15,6 +15,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -24,9 +25,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -38,6 +39,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.newscompose.presentation.common.LoadingView
@@ -78,10 +80,15 @@ fun LoginScreen(
         Content(
             paddingValues = paddingValues,
             loginState = viewModel.login,
+            resetPassState = viewModel.resetPassword,
             onNavigateToSignup = { navController.navigate(Route.SignupScreen) },
             onLogin = { email, password -> viewModel.login(email, password) },
+            onForgotPassword = {email -> viewModel.resetPassword(email)},
             loginSuccess = { navController.navigate(Route.MainNav) },
-            loginError = { scope.launch { hostState.showSnackbar(it) } }
+            loginError = { scope.launch { hostState.showSnackbar(it) } },
+            resetPassSuccess = { scope.launch { hostState.showSnackbar(it) } },
+            resetPassError = { scope.launch { hostState.showSnackbar(it) } },
+            snackBarHost = hostState
         )
     }
 }
@@ -90,10 +97,15 @@ fun LoginScreen(
 fun Content(
     paddingValues: PaddingValues,
     loginState:  Resource<AuthResult>,
+    resetPassState: Resource<Void?>,
     onLogin: (String, String) -> Unit,
+    onForgotPassword: (String) -> Unit,
     onNavigateToSignup: () -> Unit,
-    loginSuccess: @Composable () -> Unit,
-    loginError: (String) -> Unit
+    loginSuccess: () -> Unit,
+    loginError: (String) -> Unit,
+    resetPassSuccess: (String) -> Unit,
+    resetPassError: (String) -> Unit,
+    snackBarHost: SnackbarHostState
 ) {
     Column(
         modifier = Modifier
@@ -163,6 +175,46 @@ fun Content(
             shape = RoundedCornerShape(50.dp),
             content = { Text(text = "Login") }
         )
+
+        val showForgetPasswordDialog = remember { mutableStateOf(false) }
+
+        val scope = rememberCoroutineScope()
+
+        if (showForgetPasswordDialog.value)
+
+            MyAlertDialog(
+                onDismissRequest = { showForgetPasswordDialog.value = false },
+                onConfirmation = {
+                    if (txtFieldEmail.value != "") {
+                        onForgotPassword(txtFieldEmail.value)
+                        showForgetPasswordDialog.value = false
+                    } else {
+                        scope.launch {
+                            snackBarHost.showSnackbar("Please enter email address")
+                        }
+                    }
+                },
+                title = "Forgot Password?",
+                text = "Send a password reset email to entered email address.",
+                confirmButtonText = "Send",
+                dismissButtonText = "Cancel",
+                cancelable = true
+            )
+
+        Text(
+            style = MaterialTheme.typography.titleMedium.copy(
+                MaterialTheme.colorScheme.primary
+            ),
+            text = "Forgot Password?",
+
+            modifier = Modifier
+                .wrapContentWidth()
+                .wrapContentHeight()
+                .align(alignment = Alignment.CenterHorizontally)
+                .padding(20.dp)
+                .clickable { showForgetPasswordDialog.value= true }
+        )
+
         Spacer(modifier = Modifier.weight(1f))
         Text(
             style = MaterialTheme.typography.titleMedium,
@@ -184,12 +236,53 @@ fun Content(
         onSuccess = { loginSuccess() },
         onError = { loginError(it) }
     )
+
+    ResetPasswordState(
+        resetPassState= resetPassState,
+        onError = { resetPassError(it) },
+        onSuccess = { resetPassSuccess(it) }
+    )
+}
+
+@Composable
+fun MyAlertDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+    title: String,
+    text: String,
+    confirmButtonText: String,
+    dismissButtonText: String,
+    cancelable: Boolean
+) {
+    AlertDialog(
+        title = { Text(text = title) },
+        text = { Text(text = text) },
+        onDismissRequest = { onDismissRequest() },
+        confirmButton = {
+            TextButton(
+                onClick = { onConfirmation() }
+            ) {
+                Text(confirmButtonText)
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = { onDismissRequest() }
+            ) {
+                Text(dismissButtonText)
+            }
+        },
+        properties = DialogProperties(
+            dismissOnBackPress = cancelable,
+            dismissOnClickOutside = cancelable,
+        )
+    )
 }
 
 @Composable
 fun LoginState(
     loginState: Resource<AuthResult>,
-    onSuccess: @Composable () -> Unit,
+    onSuccess: () -> Unit,
     onError: (String) -> Unit
 ) {
 
@@ -203,8 +296,34 @@ fun LoginState(
         is Resource.Loading -> {
             LoadingView(PaddingValues(10.dp))
         }
-        is Resource.Success<*> -> {
+        is Resource.Success -> {
             onSuccess()
+        }
+    }
+}
+
+
+@Composable
+fun ResetPasswordState(
+    resetPassState: Resource<Void?>,
+    onSuccess: (String) -> Unit,
+    onError: (String) -> Unit
+) {
+    when (resetPassState) {
+        is Resource.Error -> {
+            onError("Error in resetting password")
+        }
+
+        is Resource.Idle -> {
+
+        }
+
+        is Resource.Loading -> {
+            LoadingView(PaddingValues(10.dp))
+        }
+
+        is Resource.Success -> {
+            onSuccess("Check your email")
         }
     }
 }

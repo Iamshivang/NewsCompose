@@ -113,6 +113,7 @@ class AuthRepositoryImpl @Inject constructor(
         return flow {
             emit(Resource.Loading())
             try {
+                Log.d(TAG, "ResetPassword Email: $email")
                 val data = auth.sendPasswordResetEmail(email).await()
                 Log.d(TAG, "Success in resetPassword $data")
                 emit(Resource.Success(data))

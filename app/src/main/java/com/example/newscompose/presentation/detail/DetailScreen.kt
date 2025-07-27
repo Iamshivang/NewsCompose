@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -33,6 +34,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -196,7 +198,15 @@ fun IconsBar(
 
     TopAppBar(
         modifier = Modifier.fillMaxWidth()
-            .statusBarsPadding(),
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color.Black,
+                        Color.Transparent,
+                    ),
+                ),
+                alpha = 0.7f,
+            ),
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = Color.Transparent,
             actionIconContentColor = colorResource(id = R.color.white),

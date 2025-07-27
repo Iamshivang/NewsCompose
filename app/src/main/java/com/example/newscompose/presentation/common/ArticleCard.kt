@@ -122,7 +122,7 @@ fun ArticleCard(
                     ){
 
                         Icon(
-                            painter = painterResource(R.drawable.ic_search_document),
+                            painter = painterResource(R.drawable.ic_article_24),
                             contentDescription = "Time Icon",
                             tint = Color.White,
                             modifier = Modifier.size(20.dp)
