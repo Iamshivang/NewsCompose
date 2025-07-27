@@ -109,6 +109,7 @@ NewsCompose • News • Jetpack Compose • Jetpack • Compose • Kotlin • 
 <img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose2.png" width="250" />
 <img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose3.png" width="250" />
 <img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose4.png" width="250" />
+<img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose5.png" width="250" />
 <img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose6.png" width="250" />
 <img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose7.png" width="250" />
 <img src="https://github.com/Iamshivang/NewsCompose/blob/main/app/assets/newscompose8.png" width="250" />
