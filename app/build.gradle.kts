@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.newscompose"
+    namespace = "com.shivangyadav.bnews"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.newscompose"
+        applicationId = "com.shivangyadav.bnews"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.newscompose" />
-                  <option name="mobileSdkAppId" value="1:1020674716235:android:8679340db6c0f7bea793ce" />
-                  <option name="projectId" value="newsapp-97d01" />
-                  <option name="projectNumber" value="1020674716235" />
+                  <option name="appId" value="com.shivangyadav.bnews" />
+                  <option name="mobileSdkAppId" value="1:901801393221:android:d786765b02860e8725b72c" />
+                  <option name="projectId" value="bnews-147c5" />
+                  <option name="projectNumber" value="901801393221" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
